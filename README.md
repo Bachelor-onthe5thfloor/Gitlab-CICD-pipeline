@@ -244,21 +244,25 @@ build-sonar:
     
     ---
     
-    ![image.png](image%206.png)
+    <img width="544" height="348" alt="image" src="https://github.com/user-attachments/assets/b5501a77-de0c-4290-8531-d8a8c6ab89d8" />
+
     
     Chuyển sang tab Issues ta thấy có 71 vấn đề trong đó có 6 vấn đề ở mức độ high, 33 vấn đề ở mức độ Medium, 32 vấn đề ở mức độ low. Đây là mức đánh giá do Sonarqube set sẵn từ trước
     
     lấy ví dụ 1 issue ở mức độ high:
     
-    ![image.png](image%207.png)
+    <img width="1415" height="1228" alt="image" src="https://github.com/user-attachments/assets/c693106c-b94f-46a7-a850-60f5436dbab5" />
+
     
     sonar sẽ chỉ ra issue đó cụ thể ở đâu trong mã nguồn, với ví dụ này thì nó nằm ở trong file src/main/java/com/example/demo/controller/AdminController.java
     
-    ![image.png](image%208.png)
+    <img width="1451" height="598" alt="image" src="https://github.com/user-attachments/assets/15372b1a-674a-4014-8ec0-4c0244bdbb09" />
+
     
     Tab why is this an issue, Sonarqube sẽ nêu ra lý do tại sao nó được xem là 1 vấn đề. Với ví dụ này, Sonarqube cho rằng “Các chuỗi ký tự chuỗi trùng lặp làm cho quá trình tái cấu trúc trở nên phức tạp và dễ xảy ra lỗi, vì bất kỳ thay đổi nào cũng cần được phổ biến trên tất cả các lần xuất hiện.  Ngoại lệ Để tránh tạo ra một số kết quả dương tính giả, các chữ có ít hơn 5 ký tự sẽ bị loại trừ.”
     
-    ![image.png](image%209.png)
+    <img width="1077" height="977" alt="image" src="https://github.com/user-attachments/assets/6a76fc29-06b2-40c6-8bc4-28f11e82a57f" />
+
     
     tab “How can I fix it” Sonarqube cũng đưa ra 1 số gợi ý để sửa khắc phục vấn đề
     
@@ -337,9 +341,11 @@ trong job này, tôi sẽ sử dụng runner trên tools-server để kích ho�
     
     Sau khi job hoàn thành sẽ có artifact là 1 file SCA_report.html
     
-    ![image.png](image%2010.png)
+    <img width="2243" height="434" alt="image" src="https://github.com/user-attachments/assets/8b2fbc05-0183-49ae-9f1d-d9bf24dbf922" />
+
     
-    ![image.png](image%2011.png)
+    <img width="2767" height="1503" alt="image" src="https://github.com/user-attachments/assets/860eac73-06e2-4b4a-b661-18fd5edec071" />
+
     
     Trong file report này Trivy nó sẽ cung cấp cho chúng ta đầy đủ thông tin các dependencies có lỗ hổng bao gồm tên gói thư viện (Package), mã định danh lỗ hổng (Vulnerability ID), mức độ nghiệm trọng (Severity) giúp lập ra danh sách ưu tiên xử lý, phiên bản hiện tại (installed version), phiên bản vá lỗi (fixed version), liên kết tham khảo (links) danh sách các đường dẫn đến báo cáo chi tiết, bài phân tích hoặc các bản tin bảo mật của các nhà phát hành. 
     
@@ -452,11 +458,13 @@ buildAndPushDockerImage:
     - Sau bước này, Image đã sẵn sàng để K3s kéo về và triển khai (Deploy).
 - DOCKER_IMAGE dạng như sau: ${REGISTRY_URL}/${REGISTRY_PROJECT}/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}_${CI_COMMIT_SHORT_SHA}
 
-![image.png](image%2012.png)
+<img width="1874" height="874" alt="image" src="https://github.com/user-attachments/assets/c7507de7-d7ec-4407-bd23-db54194503f4" />
+
 
 kết quả khi job chạy xong
 
-![image.png](image%2013.png)
+<img width="1171" height="702" alt="image" src="https://github.com/user-attachments/assets/f2192de9-1ea5-482b-9f3a-79dab023dce2" />
+
 
 Docker image đã có trên private registry
 
@@ -505,7 +513,8 @@ container-scanning:
     
 - ***Giải thích kết quả***
     
-    ![image.png](image%2014.png)
+    <img width="1602" height="1204" alt="image" src="https://github.com/user-attachments/assets/ba4a96a7-d4b8-4e29-9f1f-58c55f3bf37e" />
+
     
     bản report này về cấu trúc cũng tương tự như report của job SCA. Nó sẽ chia ra 2 lớp là lớp hệ điều hành và lớp ứng dụng. ở tầng hệ điều hành có 3 lỗ hổng của Gói libpng (thư viện xử lý hình ảnh) trong bản Alpine 3.22.2 của bạn có 3 lỗi HIGH (CVE-2025-64720, CVE-2025-65018, CVE-2025-66293). Báo cáo xác nhận "No Misconfigurations found", nghĩa là cấu hình Dockerfile của bạn (chạy user non-root, không để lộ port thừa...) đã đạt chuẩn an toàn. ở tầng ứng dụng,  Các thư viện phổ biến như jackson-databind và logback đều có nhiều lỗi mức HIGH do sử dụng phiên bản quá cũ (2.10.2 và 1.2.3). Mối đe dọa lớn nhất: org.apache.tomcat.embed:tomcat-embed-core dính mã CVE-2025-24813 mức độ CRITICAL. Đây là lỗi cực kỳ nguy hiểm, có thể cho phép tấn công từ xa.
     
@@ -514,7 +523,8 @@ container-scanning:
 
  
 
-![image.png](image%2015.png)
+<img width="1815" height="1129" alt="image" src="https://github.com/user-attachments/assets/553312ef-d213-4744-8d16-d3370a6af1bd" />
+
 
 Sau khi pipeline ở kịch bản 1 sẽ tiếp tục bổ sung thêm bước DAST, trước khi thực hiện được thì phải chạy DAST thì phải deploy dự án bằng cách đơn giản là run Docker container. 
 
@@ -542,7 +552,8 @@ deploy-Docker-container:
 
 các biến registry password, registry url, registry user đã được định nghĩa từ trước trong variable của dự án
 
-![image.png](image%2016.png)
+<img width="1334" height="1020" alt="image" src="https://github.com/user-attachments/assets/954b63f4-d4e5-43da-b5d2-252969c39b27" />
+
 
 dự án chạy trên cổng 8001 của build&deploy runner
 
@@ -642,7 +653,8 @@ ZAP-scan:
     
 - ***Giải thích kết quả***
     
-    ![image.png](image%2017.png)
+    <img width="1334" height="1020" alt="image" src="https://github.com/user-attachments/assets/d5360e9a-631a-4724-9f50-2339684c0923" />
+
     
     qua bản report ta có thể thấy có tổng cộng 10 cảnh bảo trong đó 0 cảnh báo High (lỗ hổng chiếm quyền điều khiển trực tiếp ngay lập tức), 3 cảnh báo medium (ảnh hưởng đến tính toàn vẹn dữ liệu và người dùng), 3 cảnh bảo mức low (các thiếu sót về cáu hình gia cố bảo mật), 4 cảnh bảo mức information (thông tin về kiến trúc ứng dụng)
     
@@ -672,7 +684,8 @@ ZAP-scan:
 
 trong thực nghiệm này tôi triển khai k3s cluster trên 1 server duy nhất vừa là control plane, vừa là worker, application host, ingress endpoint
 
-![image.png](image%2018.png)
+<img width="402" height="516" alt="image" src="https://github.com/user-attachments/assets/ca895b7e-199d-407c-8c2b-460f3a6c7b88" />
+
 
 - **Ingress Controller:** Đóng vai trò là cổng giao tiếp duy nhất (Gateway) của hệ thống với mạng bên ngoài. Thành phần này chịu trách nhiệm:
     - Tiếp nhận traffic từ người dùng.
@@ -820,7 +833,8 @@ deploy-to-k3s:
         `when: manual`: Yêu cầu xác nhận thủ công (nút bấm "Play") từ người quản trị. Đây là chốt chặn an toàn cuối cùng để tránh việc vô tình deploy lên môi trường Production.
         
 
-![image.png](image%2019.png)
+<img width="402" height="516" alt="image" src="https://github.com/user-attachments/assets/0590ee1b-0dfd-4565-b175-5182bdbc0c27" />
+
 
 đây là hình ảnh shop chạy với tên miền là shoeshop.ducbahpb.io.vn
 
@@ -913,7 +927,8 @@ stress-test:
 
 đây là kq của job
 
-![image.png](image%2020.png)
+<img width="1317" height="969" alt="image" src="https://github.com/user-attachments/assets/5dcab6f6-b97e-4967-a1a4-2234ae1b1341" />
+
 
 ### Phân tích kết quả kiểm thử tải (Stress Test Report)
 
@@ -948,7 +963,8 @@ Hệ thống đã vượt qua bài kiểm tra Stress Test với tổng cộng 17
 
 Trong mô hình DevSecOps, việc triển khai ứng dụng (Deployment) mới chỉ là bước khởi đầu. Để đảm bảo ứng dụng hoạt động bền bỉ và an toàn, quá trình **Vận hành & Giám sát (Operations & Monitoring)** đóng vai trò then chốt. Kịch bản này tập trung vào việc triển khai giải pháp giám sát tập trung sử dụng **Zabbix** – một công cụ mã nguồn mở mạnh mẽ. Mục tiêu không chỉ dừng lại ở việc theo dõi tài nguyên hệ thống (CPU, RAM) mà còn thiết lập thông báo về telegram cho người quản trị
 
-![image.png](image%2021.png)
+<img width="2658" height="495" alt="image" src="https://github.com/user-attachments/assets/98086590-59aa-4d6b-a3a1-190c3bfbb8ef" />
+
 
 hình ảnh các host đã được add vào trong zabbix thông qua công cụ zabbix agent trên mỗi host. Zabbix Agent là một chương trình nhẹ (daemon) được cài đặt trên các máy chủ đích (Target Hosts). Vai trò của nó là thu thập dữ liệu nội tại của hệ điều hành (CPU, RAM, Disk, Network) và gửi về Zabbix Server để xử lý.
 
@@ -965,13 +981,15 @@ Thực hiện kiểm tra khả năng cảnh báo của zabbix thông qua bài ki
 
 Bước 1: thiết lập item cho host dev-server_192.168.8.110
 
-![image.png](image%2022.png)
+<img width="1634" height="816" alt="image" src="https://github.com/user-attachments/assets/5015b1ce-8675-408c-a4da-726552956c20" />
+
 
 - thiết lập một Item sử dụng Zabbix Agent với key net.tcp.listen[8001]. Item này sẽ định kỳ 10 giây một lần kiểm tra xem Port 8001 trên máy chủ đích có đang mở hay không. Giá trị trả về là **1** (Dịch vụ hoạt động) hoặc **0** (Dịch vụ ngừng hoạt động). Đây là cơ sở dữ liệu để Trigger kích hoạt cảnh báo khi giá trị này chuyển về 0.
 
 Bước 2: thiết lập trigger ứng với item vừa mới thiết lập
 
-![image.png](image%2023.png)
+<img width="1590" height="695" alt="image" src="https://github.com/user-attachments/assets/7aba8a2a-5e2d-4ae3-8e5e-b80ced4805ed" />
+
 
 Để hoàn thiện quy trình giám sát, chúng tôi thiết lập một Trigger với mức độ nghiêm trọng **High**. Trigger này sử dụng hàm last() để liên tục đánh giá dữ liệu từ Item. Ngay khi giá trị trả về bằng **0** (tức là Port 8001 không còn lắng nghe kết nối), Trigger sẽ lập tức kích hoạt trạng thái sự cố và gửi thông báo khẩn cấp đến đội ngũ vận hành, giúp giảm thiểu tối đa thời gian gián đoạn dịch vụ (Downtime).
 
@@ -981,15 +999,18 @@ Bước 3: Dừng chạy container shoeshop trên dev-server và chờ thông b�
 docker stop shoeshop
 ```
 
-![image.png](image%2024.png)
+<img width="1590" height="695" alt="image" src="https://github.com/user-attachments/assets/52058d17-4b43-454c-8f41-2e022927fd0e" />
 
-hình ảnh dịch vụ không chạy trên 
 
-![image.png](image%2025.png)
+hình ảnh dịch vụ không chạy trên cổng 8001 của dev-server
+
+<img width="951" height="410" alt="image" src="https://github.com/user-attachments/assets/f45738d7-ce6b-4b21-b9cf-d0354ce61c3b" />
+
 
 thông báo của zabbix về telegram
 
-![image.png](image%2026.png)
+<img width="2664" height="245" alt="image" src="https://github.com/user-attachments/assets/93ffdad4-5c6e-4390-93b4-064712dd7744" />
+
 
 thông báo của zabbix trên tab problems của trang chủ zabbix
 
@@ -999,20 +1020,24 @@ Bước 4: mở lại dịch vụ và xem thông báo khôi phục từ zabbix
 docker start shoeshop
 ```
 
-![image.png](image%2027.png)
+<img width="1631" height="1008" alt="image" src="https://github.com/user-attachments/assets/7a095349-4c2e-435c-ba20-27b7148cc3df" />
+
 
 hình ảnh dịch vụ đã hoạt động trở lại
 
-![image.png](image%2028.png)
+<img width="925" height="353" alt="image" src="https://github.com/user-attachments/assets/26484f5f-cbed-4900-bd9a-a5573095c4e9" />
+
 
 hình ảnh thông báo của zabbix về telegram
 
-![image.png](image%2029.png)
+<img width="2650" height="194" alt="image" src="https://github.com/user-attachments/assets/a0d56393-24a9-4d35-9a9e-d2450a42ca81" />
+
 
 hình ảnh thông báo của zabbix trên tab problems của trang chủ zabbix
 
 Để tối ưu hóa thời gian triển khai và đảm bảo các chỉ số giám sát tuân thủ theo các tiêu chuẩn vận hành tốt nhất (Best Practices), hệ thống được áp dụng Template "Linux by Zabbix agent" có sẵn. Thay vì cấu hình thủ công từng tham số, Template này cung cấp một bộ quy tắc giám sát toàn diện bao quát các khía cạnh sinh tồn của máy chủ. Cụ thể, về mặt tài nguyên, Zabbix tự động thu thập dữ liệu hiệu năng của CPU (system.cpu.util), dung lượng RAM khả dụng (vm.memory.size) và mức độ tải trung bình (Load Average). Các Trigger tương ứng được thiết lập sẵn để cảnh báo ngay lập tức khi hệ thống rơi vào trạng thái căng thẳng, ví dụ như khi hiệu suất CPU vượt quá 90% trong thời gian dài hoặc khi bộ nhớ RAM trống giảm xuống dưới ngưỡng an toàn (20MB), giúp ngăn chặn kịp thời các sự cố treo dịch vụ (Crash) do thiếu tài nguyên.
 
-![image.png](image%2030.png)
+<img width="915" height="636" alt="image" src="https://github.com/user-attachments/assets/1b590aa9-ab88-4dfe-b638-94699393594c" />
+
 
 hình ảnh thông báo vấn đề và khôi phục về mức sử dụng bộ nhớ trên gitlab-server
