@@ -1,8 +1,6 @@
-# Báo cáo thực nghiệm
-
 # Mô hình triển khai
 
-![image.png](image.png)
+<img width="1953" height="1011" alt="image" src="https://github.com/user-attachments/assets/65018278-b9d9-41ac-8d3d-86d1f42317ed" />
 
 Mô hình của bạn được xây dựng theo nguyên tắc tách biệt môi trường và tự động hóa bảo mật, đảm bảo mọi thay đổi về mã nguồn đều được kiểm duyệt chặt chẽ trước khi lên môi trường Production.
 
@@ -31,7 +29,8 @@ Mô hình của bạn được xây dựng theo nguyên tắc tách biệt môi 
 
 # Kịch bản 1: Xây dựng CI/CD pipeline tích hợp công cụ kiểm thử bảo mật mã nguồn và Docker Image
 
-![image.png](image%201.png)
+<img width="1411" height="636" alt="image 1" src="https://github.com/user-attachments/assets/1494fb14-c862-4062-8cf6-18623a1472f9" />
+
 
 Mô tả luồng hoạt động của pipeline:
 
@@ -85,7 +84,7 @@ build:
     
     đây là kết quả test
     
-    ![image.png](image%202.png)
+    <img width="1548" height="400" alt="image 2" src="https://github.com/user-attachments/assets/9e6f90fc-ef48-48be-8979-0d11b1668ba4" />
     
     - **Tests run: 1**
         
@@ -108,13 +107,15 @@ build:
         Tổng thời gian thực thi test là khoảng 13.9 giây.
         
     
-    ![image.png](image%203.png)
+    <img width="1552" height="644" alt="image 3" src="https://github.com/user-attachments/assets/a88f4488-1508-4b73-bf0a-1e37728c9db0" />
+
     
     đây là kết quả build
     
     Quá trình build ứng dụng bằng Maven trong pipeline CI/CD đã được thực hiện thành công. Hệ thống ghi nhận trạng thái *BUILD SUCCESS*, cho thấy mã nguồn được biên dịch, kiểm thử và đóng gói mà không phát sinh lỗi. Tổng thời gian thực thi toàn bộ quá trình build là khoảng 21 giây, phù hợp với một ứng dụng Spring Boot có kiểm thử tự động.
     
-    ![image.png](image%204.png)
+    <img width="2249" height="1038" alt="image 4" src="https://github.com/user-attachments/assets/1b34b6f2-48ae-433d-950d-f55b5dc99943" />
+
     
     Sau khi build hoàn tất, GitLab Runner tiến hành thu thập và upload artifact theo cấu hình. Thư mục `target/` chứa các file kết quả build đã được phát hiện và đóng gói thành archive để lưu trữ trên GitLab. Quá trình upload artifact diễn ra thành công với mã phản hồi 201 (Created), xác nhận artifact đã được lưu trữ đầy đủ và sẵn sàng cho các bước triển khai tiếp theo. Cuối cùng, Runner thực hiện dọn dẹp thư mục làm việc và các biến môi trường tạm thời, kết thúc job với trạng thái *Job succeeded*.
     
@@ -175,7 +176,8 @@ build-sonar:
     
     tiếp theo truy cập vào website của sonarqube: 192.168.8.80:8000 để xem kết quả test mã nguồn
     
-    ![image.png](image%205.png)
+    <img width="1797" height="409" alt="image 5" src="https://github.com/user-attachments/assets/f71fb6b3-3842-4db4-9be5-6c1017ef0010" />
+
     
     ### 1. Security – A (0 issues)
     
